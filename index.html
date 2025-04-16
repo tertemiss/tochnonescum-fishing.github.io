@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ФВ Радар</title>
+    <title>Drygmit Tracker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,19 +27,23 @@
 </head>
 <body>
     <div class="container">
-        <h1 id="distance">0 км</h1>
+        <h1 id="tracker">Drygmit ahead: 100 км</h1>
     </div>
 
     <script>
-        let distance = 0;
+        let distance = 100; // Начальная дистанция
         function getRandomStep() {
-            return Math.floor(Math.random() * 10) + 1; // от 1 до 10 км
+            return Math.floor(Math.random() * 5) + 1; // Уменьшение от 1 до 5 км
         }
 
         setInterval(() => {
-            distance += getRandomStep();
-            document.getElementById("distance").textContent = distance + " км";
-        }, 500); // обновление каждые 500 мс
+            distance -= getRandomStep(); // Уменьшаем значение
+            if (distance <= 0) {
+                distance = 0; // Ограничение, чтобы не пошло в минус
+                document.getElementById("tracker").style.color = 'red'; // Красный текст
+            }
+            document.getElementById("tracker").textContent = `Drygmit ahead: ${distance} км`;
+        }, 500); // Обновление каждые 500 мс
     </script>
 </body>
 </html>
