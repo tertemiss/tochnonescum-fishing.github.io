@@ -23,26 +23,47 @@
             border-radius: 15px;
             display: inline-block;
         }
+        .shake {
+            color: red;
+            animation: shake 0.5s infinite alternate;
+        }
+        @keyframes shake {
+            0% { transform: translateX(-5px); }
+            100% { transform: translateX(5px); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 id="tracker">Drygmit ahead: 100 км</h1>
+        <h1 id="message"></h1>
     </div>
 
     <script>
-        let distance = 100; // Начальная дистанция
+        let distance = 100; // Начальная дистанция в километрах
+        let unit = 'км'; // Единица измерения (км)
+
         function getRandomStep() {
-            return Math.floor(Math.random() * 5) + 1; // Уменьшение от 1 до 5 км
+            return Math.floor(Math.random() * 5) + 1; // Уменьшение на от 1 до 5
         }
 
         setInterval(() => {
             distance -= getRandomStep(); // Уменьшаем значение
             if (distance <= 0) {
-                distance = 0; // Ограничение, чтобы не пошло в минус
-                document.getElementById("tracker").style.color = 'red'; // Красный текст
+                if (unit === 'км') {
+                    unit = 'м'; // Переход на метры
+                    distance = 1000; // Переводим 0 км в 1000 метров
+                } else if (unit === 'м') {
+                    unit = 'см'; // Переход на сантиметры
+                    distance = 100; // Переводим 0 метров в 1000 сантиметров
+                } else if (unit === 'см') {
+                    distance = 1; // Достигаем 0 сантиметров
+                    document.getElementById("tracker").style.color = 'red'; // Красный текст
+                    document.getElementById("message").textContent = "Don't look back"; // Сообщение
+                    document.getElementById("message").classList.add("shake"); // Добавляем анимацию
+                }
             }
-            document.getElementById("tracker").textContent = `Drygmit ahead: ${distance} км`;
+            document.getElementById("tracker").textContent = `Drygmit ahead: ${distance} ${unit}`;
         }, 500); // Обновление каждые 500 мс
     </script>
 </body>
