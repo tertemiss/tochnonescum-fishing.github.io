@@ -1,101 +1,197 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drygmit Tracker</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #141E30, #243B55);
-            color: white;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            font-size: 3em;
-            margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            display: inline-block;
-        }
-        .shake {
-            color: red;
-            animation: shake 0.5s infinite alternate, pulse 1s infinite alternate;
-        }
-        @keyframes shake {
-            0% { transform: translateX(-5px); }
-            100% { transform: translateX(5px); }
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        .scary {
-            color: #ff0000;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            animation: flicker 0.1s infinite alternate, distorted 0.5s infinite alternate;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drygmit Tracker</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      color: white;
+      text-align: center;
+      padding: 50px;
+      overflow: hidden;
+      /* Багровый фон с эффектом крови */
+      background: url('https://www.transparenttextures.com/patterns/black-linen.png'),
+                  linear-gradient(to right, rgba(20, 30, 48, 0.6), rgba(36, 59, 85, 0.8));
+      background-blend-mode: multiply;
+      background-size: cover;
+      animation: bloodEffect 5s infinite alternate;
+    }
 
-        @keyframes flicker {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
+    @keyframes bloodEffect {
+      0% { filter: brightness(0.8); }
+      50% { filter: brightness(0.5); }
+      100% { filter: brightness(0.7); }
+    }
 
-        @keyframes distorted {
-            0% { transform: skewX(-5deg); }
-            50% { transform: skewX(5deg); }
-            100% { transform: skewX(-5deg); }
-        }
-    </style>
+    .container {
+      position: relative;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 15px;
+      display: inline-block;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      animation: containerPulse 3s infinite alternate;
+    }
+
+    @keyframes containerPulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+    h1 {
+      margin: 20px 0;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+      transition: transform 0.1s ease-in-out;
+    }
+
+    /* Стили для основного счетчика */
+    #tracker {
+      font-size: 3em;
+    }
+
+    /* Стили для финального сообщения "Don't look back" */
+    #message {
+      font-size: 4em;  /* увеличенный размер */
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 40px;
+      font-weight: bold;
+      display: block;
+      color: red;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+      transition: transform 0.1s ease-in-out;
+    }
+
+    /* Общие эффекты для glitch, shake и flicker */
+    .shake {
+      animation: shake 0.4s infinite alternate, distortText 0.6s infinite alternate;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(-12px); }
+      100% { transform: translateX(12px); }
+    }
+
+    @keyframes distortText {
+      0% { transform: skewX(-8deg); }
+      50% { transform: skewX(8deg); }
+      100% { transform: skewX(-8deg); }
+    }
+
+    .flicker {
+      animation: flicker 0.08s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    .glitch {
+      position: relative;
+      display: inline-block;
+      color: inherit;
+    }
+
+    .glitch::before, 
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.8;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 red;
+      animation: glitchBefore 2s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 blue;
+      animation: glitchAfter 2s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitchBefore {
+      0% { clip: rect(10px, 9999px, 30px, 0); transform: translate(0, 0); }
+      50% { clip: rect(50px, 9999px, 80px, 0); transform: translate(-5px, -5px); }
+      100% { clip: rect(10px, 9999px, 30px, 0); transform: translate(0, 0); }
+    }
+
+    @keyframes glitchAfter {
+      0% { clip: rect(60px, 9999px, 80px, 0); transform: translate(0, 0); }
+      50% { clip: rect(20px, 9999px, 40px, 0); transform: translate(5px, 5px); }
+      100% { clip: rect(60px, 9999px, 80px, 0); transform: translate(0, 0); }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="tracker">Drygmit ahead: 100 км</h1>
-        <h1 id="message"></h1>
-    </div>
+  <div class="container">
+    <h1 id="tracker" class="glitch" data-text="Drygmit ahead: 100 км">Drygmit ahead: 100 км</h1>
+    <!-- Сообщение "Don't look back" будет появляться ниже -->
+    <h1 id="message"></h1>
+  </div>
 
-    <script>
-        let distance = 100; // Начальная дистанция в километрах
-        let unit = 'км'; // Единица измерения (км)
+  <script>
+    let distance = 100;       // Начальная дистанция в километрах
+    let unit = 'км';          // Единица измерения (км, м, см)
+    let intervalTime = 150;   // Интервал обновления
+    let darknessProgress = 0; // Накопленный параметр затемнения (от 0 до 1)
 
-        function getRandomStep() {
-            return Math.floor(Math.random() * 5) + 1; // Уменьшение на от 1 до 5
+    function getRandomStep() {
+      return Math.floor(Math.random() * 5) + 1;
+    }
+
+    setInterval(() => {
+      let step = getRandomStep();
+      distance -= step;
+      darknessProgress += step * 0.01;
+      if (darknessProgress > 1) darknessProgress = 1;
+
+      // Постепенное затемнение фона с накопленным эффектом
+      document.body.style.background = `url('https://www.transparenttextures.com/patterns/black-linen.png'),
+         linear-gradient(to right, rgba(20, 30, 48, ${0.6 + 0.4 * darknessProgress}),
+         rgba(36, 59, 85, ${0.8 + 0.2 * darknessProgress}))`;
+      document.body.style.backgroundSize = 'cover';
+
+      if (distance <= 0) {
+        if (unit === 'км') {
+          unit = 'м';
+          distance = 1000;
+        } else if (unit === 'м') {
+          unit = 'см';
+          distance = 100;
+        } else if (unit === 'см') {
+          distance = 10;  // Финальное значение
+          document.getElementById("tracker").style.color = 'red';
+          let msg = document.getElementById("message");
+          msg.textContent = "Don't look back";
+          // Применяем те же эффекты для glitch, shake и flicker
+          msg.classList.add("shake", "flicker", "glitch");
+          msg.setAttribute("data-text", "Don't look back");
         }
+      }
 
-        let intervalTime = 150; // Начальный интервал для километров
+      // Обновляем эффекты дрожания и искажения для tracker
+      let shakeIntensity = Math.max(0.1, 0.5 - darknessProgress * 0.3);
+      document.getElementById("message").style.animationDuration = `${shakeIntensity}s`;
 
-        setInterval(() => {
-            distance -= getRandomStep(); // Уменьшаем значение
+      let distortionIntensity = darknessProgress * 10;
+      document.getElementById("tracker").style.transform = `skewX(${distortionIntensity}deg)`;
 
-            if (distance <= 0) {
-                if (unit === 'км') {
-                    unit = 'м'; // Переход на метры
-                    distance = 1000; // Переводим 0 км в 1000 метров
-                    intervalTime = 150; // Ускоряем уменьшение для метров
-                } else if (unit === 'м') {
-                    unit = 'см'; // Переход на сантиметры
-                    distance = 100; // Переводим 0 метров в 1000 сантиметров
-                    intervalTime = 150; // Ускоряем уменьшение для сантиметров
-                } else if (unit === 'см') {
-                    distance = 10; // Достигаем 0 сантиметров
-                    document.getElementById("tracker").style.color = 'red'; // Красный текст
-                    document.getElementById("message").textContent = "Don't look back"; // Сообщение
-                    document.getElementById("message").classList.add("shake", "scary"); // Добавляем анимацию
-                }
-            }
-
-            document.getElementById("tracker").textContent = `Drygmit ahead: ${distance} ${unit}`;
-        }, intervalTime); // Интервал будет зависеть от единицы измерения
-    </script>
+      // Обновляем текст и data-text для эффекта glitch на tracker
+      let tracker = document.getElementById("tracker");
+      tracker.textContent = `Drygmit ahead: ${distance} ${unit}`;
+      tracker.setAttribute("data-text", tracker.textContent);
+    }, intervalTime);
+  </script>
 </body>
 </html>
