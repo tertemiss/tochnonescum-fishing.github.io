@@ -87,7 +87,7 @@
                     distance = 100; // Переводим 0 метров в 1000 сантиметров
                     intervalTime = 10; // Ускоряем уменьшение для сантиметров
                 } else if (unit === 'см') {
-                    distance = 0; // Достигаем 0 сантиметров
+                    distance = 10; // Достигаем 0 сантиметров
                     document.getElementById("tracker").style.color = 'red'; // Красный текст
                     document.getElementById("message").textContent = "Don't look back"; // Сообщение
                     document.getElementById("message").classList.add("shake", "scary"); // Добавляем анимацию
