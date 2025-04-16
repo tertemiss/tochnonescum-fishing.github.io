@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Важная информация</title>
+    <title>ФВ Радар</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,15 +13,9 @@
             padding: 50px;
         }
         h1 {
-            font-size: 2.5em;
+            font-size: 3em;
             margin: 20px 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        .good {
-            color: #4CAF50;
-        }
-        .bad {
-            color: #FF5733;
         }
         .container {
             background: rgba(255, 255, 255, 0.1);
@@ -33,9 +27,19 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="bad">Матвей Лох</h1>
-        <h1 class="good">Сегодня играет на ланистерах</h1>
-        <h1 class="bad">И сосет</h1>
+        <h1 id="distance">0 км</h1>
     </div>
+
+    <script>
+        let distance = 0;
+        function getRandomStep() {
+            return Math.floor(Math.random() * 10) + 1; // от 1 до 10 км
+        }
+
+        setInterval(() => {
+            distance += getRandomStep();
+            document.getElementById("distance").textContent = distance + " км";
+        }, 500); // обновление каждые 500 мс
+    </script>
 </body>
 </html>
