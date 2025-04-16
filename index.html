@@ -85,7 +85,7 @@
                 } else if (unit === 'м') {
                     unit = 'см'; // Переход на сантиметры
                     distance = 1000; // Переводим 0 метров в 1000 сантиметров
-                    intervalTime = 30; // Ускоряем уменьшение для сантиметров
+                    intervalTime = 10; // Ускоряем уменьшение для сантиметров
                 } else if (unit === 'см') {
                     distance = 0; // Достигаем 0 сантиметров
                     document.getElementById("tracker").style.color = 'red'; // Красный текст
