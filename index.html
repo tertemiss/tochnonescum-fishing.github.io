@@ -25,11 +25,36 @@
         }
         .shake {
             color: red;
-            animation: shake 0.5s infinite alternate;
+            animation: shake 0.5s infinite alternate, pulse 1s infinite alternate;
         }
         @keyframes shake {
             0% { transform: translateX(-5px); }
             100% { transform: translateX(5px); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .scary {
+            color: #ff0000;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: flicker 0.1s infinite alternate, distorted 0.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes distorted {
+            0% { transform: skewX(-5deg); }
+            50% { transform: skewX(5deg); }
+            100% { transform: skewX(-5deg); }
         }
     </style>
 </head>
@@ -47,24 +72,30 @@
             return Math.floor(Math.random() * 5) + 1; // Уменьшение на от 1 до 5
         }
 
+        let intervalTime = 300; // Начальный интервал для километров
+
         setInterval(() => {
             distance -= getRandomStep(); // Уменьшаем значение
+
             if (distance <= 0) {
                 if (unit === 'км') {
                     unit = 'м'; // Переход на метры
                     distance = 1000; // Переводим 0 км в 1000 метров
+                    intervalTime = 30; // Ускоряем уменьшение для метров
                 } else if (unit === 'м') {
                     unit = 'см'; // Переход на сантиметры
-                    distance = 100; // Переводим 0 метров в 1000 сантиметров
+                    distance = 1000; // Переводим 0 метров в 1000 сантиметров
+                    intervalTime = 30; // Ускоряем уменьшение для сантиметров
                 } else if (unit === 'см') {
-                    distance = 1; // Достигаем 0 сантиметров
+                    distance = 0; // Достигаем 0 сантиметров
                     document.getElementById("tracker").style.color = 'red'; // Красный текст
                     document.getElementById("message").textContent = "Don't look back"; // Сообщение
-                    document.getElementById("message").classList.add("shake"); // Добавляем анимацию
+                    document.getElementById("message").classList.add("shake", "scary"); // Добавляем анимацию
                 }
             }
+
             document.getElementById("tracker").textContent = `Drygmit ahead: ${distance} ${unit}`;
-        }, 500); // Обновление каждые 500 мс
+        }, intervalTime); // Интервал будет зависеть от единицы измерения
     </script>
 </body>
 </html>
